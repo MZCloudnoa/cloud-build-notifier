@@ -1,0 +1,83 @@
+{
+  "artifacts": {
+    "images": [
+      "gcr.io/cloudnoa-dev/gcp-billing-sample:latest",
+      "gcr.io/cloudnoa-dev/gcp-billing-sample:049f769"
+    ]
+  },
+  "buildTriggerId": "55c9fe51-7734-4f6c-b67c-0d7c664f739e",
+  "createTime": "2019-07-26T08:56:45.582028084Z",
+  "finishTime": "2019-07-26T08:57:02.854132129Z",
+  "id": "bd47c6c9-171c-4986-a60c-bca551fe8662",
+  "images": [
+    "gcr.io/cloudnoa-dev/gcp-billing-sample:latest",
+    "gcr.io/cloudnoa-dev/gcp-billing-sample:049f769"
+  ],
+  "logUrl": "https://console.cloud.google.com/gcr/builds/bd47c6c9-171c-4986-a60c-bca551fe8662?project=371948161396",
+  "logsBucket": "gs://371948161396.cloudbuild-logs.googleusercontent.com",
+  "options": {
+    "logging": "LEGACY",
+    "substitutionOption": "ALLOW_LOOSE"
+  },
+  "projectId": "cloudnoa-dev",
+  "results": {
+    "buildStepImages": [
+      "sha256:38c1c848f5daa51621b814f44ad35dac50e1b2e9f6b5045202b7c3b1a0c72244"
+    ]
+  },
+  "source": {
+    "repoSource": {
+      "branchName": "master",
+      "projectId": "cloudnoa-dev",
+      "repoName": "github_mzcloudnoa_gcp-billing-sample"
+    }
+  },
+  "sourceProvenance": {
+    "resolvedRepoSource": {
+      "commitSha": "049f76972cb2b51ed186b38cb8e3c2456dd33e7a",
+      "projectId": "cloudnoa-dev",
+      "repoName": "github_mzcloudnoa_gcp-billing-sample"
+    }
+  },
+  "startTime": "2019-07-26T08:56:46.725728678Z",
+  "status": "FAILURE",
+  "steps": [{
+    "args": [
+      "build",
+      ".",
+      "-t",
+      "gcr.io/cloudnoa-dev/gcp-billing-sample:latest",
+      "-t",
+      "gcr.io/cloudnoa-dev/gcp-billing-sample:049f769"
+    ],
+    "name": "gcr.io/cloud-builders/docker",
+    "pullTiming": {
+      "endTime": "2019-07-26T08:56:56.101253885Z",
+      "startTime": "2019-07-26T08:56:55.988236202Z"
+    },
+    "status": "TIMEOUT",
+    "timeout": "5s",
+    "timing": {
+      "endTime": "2019-07-26T08:57:01.103451539Z",
+      "startTime": "2019-07-26T08:56:55.988236202Z"
+    }
+  }],
+  "substitutions": {
+    "_BUILD_TITLE": "[SAMPLE] Build",
+    "_IMAGE_URL": "gcr.io/cloudnoa-dev/gcp-billing-sample"
+  },
+  "tags": [
+    "trigger-55c9fe51-7734-4f6c-b67c-0d7c664f739e"
+  ],
+  "timeout": "600s",
+  "timing": {
+    "BUILD": {
+      "endTime": "2019-07-26T08:57:01.764594421Z",
+      "startTime": "2019-07-26T08:56:55.988196039Z"
+    },
+    "FETCHSOURCE": {
+      "endTime": "2019-07-26T08:56:55.885721614Z",
+      "startTime": "2019-07-26T08:56:49.868481787Z"
+    }
+  }
+}

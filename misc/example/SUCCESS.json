@@ -1,0 +1,112 @@
+{
+  "artifacts": {
+    "images": [
+      "gcr.io/cloudnoa-dev/gcp-billing-sample:latest",
+      "gcr.io/cloudnoa-dev/gcp-billing-sample:4722293"
+    ]
+  },
+  "buildTriggerId": "55c9fe51-7734-4f6c-b67c-0d7c664f739e",
+  "createTime": "2019-07-26T07:51:54.615370340Z",
+  "finishTime": "2019-07-26T07:52:27.676469Z",
+  "id": "7486540e-735e-4328-8ad8-c8c10c5fbd42",
+  "images": [
+    "gcr.io/cloudnoa-dev/gcp-billing-sample:latest",
+    "gcr.io/cloudnoa-dev/gcp-billing-sample:4722293"
+  ],
+  "logUrl": "https://console.cloud.google.com/gcr/builds/7486540e-735e-4328-8ad8-c8c10c5fbd42?project=371948161396",
+  "logsBucket": "gs://371948161396.cloudbuild-logs.googleusercontent.com",
+  "options": {
+    "logging": "LEGACY",
+    "substitutionOption": "ALLOW_LOOSE"
+  },
+  "projectId": "cloudnoa-dev",
+  "results": {
+    "buildStepImages": [
+      "sha256:38c1c848f5daa51621b814f44ad35dac50e1b2e9f6b5045202b7c3b1a0c72244"
+    ],
+    "images": [{
+        "digest": "sha256:07b0a5cb10d8af388246fe21c794cdbff5ce21a7701588c837dd072322954e97",
+        "name": "gcr.io/cloudnoa-dev/gcp-billing-sample",
+        "pushTiming": {
+          "endTime": "2019-07-26T07:52:24.814732482Z",
+          "startTime": "2019-07-26T07:52:15.025698903Z"
+        }
+      },
+      {
+        "digest": "sha256:07b0a5cb10d8af388246fe21c794cdbff5ce21a7701588c837dd072322954e97",
+        "name": "gcr.io/cloudnoa-dev/gcp-billing-sample:latest",
+        "pushTiming": {
+          "endTime": "2019-07-26T07:52:24.814732482Z",
+          "startTime": "2019-07-26T07:52:15.025698903Z"
+        }
+      },
+      {
+        "digest": "sha256:07b0a5cb10d8af388246fe21c794cdbff5ce21a7701588c837dd072322954e97",
+        "name": "gcr.io/cloudnoa-dev/gcp-billing-sample:4722293",
+        "pushTiming": {
+          "endTime": "2019-07-26T07:52:24.814732482Z",
+          "startTime": "2019-07-26T07:52:15.025698903Z"
+        }
+      }
+    ]
+  },
+  "source": {
+    "repoSource": {
+      "branchName": "master",
+      "projectId": "cloudnoa-dev",
+      "repoName": "github_mzcloudnoa_gcp-billing-sample"
+    }
+  },
+  "sourceProvenance": {
+    "resolvedRepoSource": {
+      "commitSha": "472229395620a6c1b09ca2c2e1244e842e5144d9",
+      "projectId": "cloudnoa-dev",
+      "repoName": "github_mzcloudnoa_gcp-billing-sample"
+    }
+  },
+  "startTime": "2019-07-26T07:51:55.520997380Z",
+  "status": "SUCCESS",
+  "steps": [{
+    "args": [
+      "build",
+      ".",
+      "-t",
+      "gcr.io/cloudnoa-dev/gcp-billing-sample:latest",
+      "-t",
+      "gcr.io/cloudnoa-dev/gcp-billing-sample:4722293"
+    ],
+    "name": "gcr.io/cloud-builders/docker",
+    "pullTiming": {
+      "endTime": "2019-07-26T07:52:04.927601352Z",
+      "startTime": "2019-07-26T07:52:04.860543878Z"
+    },
+    "status": "SUCCESS",
+    "timeout": "600s",
+    "timing": {
+      "endTime": "2019-07-26T07:52:14.643954004Z",
+      "startTime": "2019-07-26T07:52:04.860543878Z"
+    }
+  }],
+  "substitutions": {
+    "_BUILD_TITLE": "[SAMPLE] Build",
+    "_IMAGE_URL": "gcr.io/cloudnoa-dev/gcp-billing-sample"
+  },
+  "tags": [
+    "trigger-55c9fe51-7734-4f6c-b67c-0d7c664f739e"
+  ],
+  "timeout": "600s",
+  "timing": {
+    "BUILD": {
+      "endTime": "2019-07-26T07:52:15.025653418Z",
+      "startTime": "2019-07-26T07:52:04.860505581Z"
+    },
+    "FETCHSOURCE": {
+      "endTime": "2019-07-26T07:52:04.798982431Z",
+      "startTime": "2019-07-26T07:52:00.507358242Z"
+    },
+    "PUSH": {
+      "endTime": "2019-07-26T07:52:26.820589444Z",
+      "startTime": "2019-07-26T07:52:15.025697868Z"
+    }
+  }
+}

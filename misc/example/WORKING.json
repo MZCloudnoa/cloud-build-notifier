@@ -1,0 +1,42 @@
+{
+  "id": "773c74f2-8aeb-47c2-9dd9-d22c12d02da9",
+  "projectId": "cloudnoa-dev",
+  "status": "WORKING",
+  "source": {
+    "repoSource": {
+      "projectId": "cloudnoa-dev",
+      "repoName": "github_mzcloudnoa_gcp-billing-sample",
+      "branchName": "master"
+    }
+  },
+  "steps": [{
+    "name": "gcr.io/cloud-builders/docker",
+    "args": ["build", ".", "-t", "gcr.io/cloudnoa-dev/gcp-billing-sample:latest", "-t", "gcr.io/cloudnoa-dev/gcp-billing-sample:fa2e6a2"]
+  }],
+  "createTime": "2019-07-26T09:10:52.727110762Z",
+  "startTime": "2019-07-26T09:10:53.894846320Z",
+  "timeout": "600s",
+  "images": ["gcr.io/cloudnoa-dev/gcp-billing-sample:latest", "gcr.io/cloudnoa-dev/gcp-billing-sample:fa2e6a2"],
+  "artifacts": {
+    "images": ["gcr.io/cloudnoa-dev/gcp-billing-sample:latest", "gcr.io/cloudnoa-dev/gcp-billing-sample:fa2e6a2"]
+  },
+  "logsBucket": "gs://371948161396.cloudbuild-logs.googleusercontent.com",
+  "sourceProvenance": {
+    "resolvedRepoSource": {
+      "projectId": "cloudnoa-dev",
+      "repoName": "github_mzcloudnoa_gcp-billing-sample",
+      "commitSha": "fa2e6a28ebf7c7f4a37a5724b5bbab503d6df7a9"
+    }
+  },
+  "buildTriggerId": "55c9fe51-7734-4f6c-b67c-0d7c664f739e",
+  "options": {
+    "substitutionOption": "ALLOW_LOOSE",
+    "logging": "LEGACY"
+  },
+  "logUrl": "https://console.cloud.google.com/gcr/builds/773c74f2-8aeb-47c2-9dd9-d22c12d02da9?project=371948161396",
+  "substitutions": {
+    "_BUILD_TITLE": "[SAMPLE] Build",
+    "_IMAGE_URL": "gcr.io/cloudnoa-dev/gcp-billing-sample"
+  },
+  "tags": ["trigger-55c9fe51-7734-4f6c-b67c-0d7c664f739e"]
+}
