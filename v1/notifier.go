@@ -97,7 +97,7 @@ func (n *Notifier) HandlePubSub(data []byte) error {
 	}
 
 	if n.getDryRun() {
-		n.log(strings.ReplaceAll(msg, "\n", ""))
+		n.log(strings.Replace(msg, "\n", "", -1))
 		return nil
 	}
 
