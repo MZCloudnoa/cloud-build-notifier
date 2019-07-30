@@ -77,7 +77,6 @@ func (n *Notifier) HandlePubSub(data []byte) error {
 		"Build":      n.build,
 		"Title":      n.getTitle(),
 		"Status":     status.(string),
-		"TriggerId":  n.getTriggerID(),
 		"ProjectID":  getProp(n.build, "projectId"),
 		"RepoName":   getProp(n.build, "source.repoSource.repoName"),
 		"TagName":    getProp(n.build, "source.repoSource.tagName"),
@@ -107,8 +106,4 @@ func (n *Notifier) HandlePubSub(data []byte) error {
 	}
 
 	return sendNotification(url, msg, platformType)
-}
-
-func (n *Notifier) getTriggerID() string {
-	return ""
 }

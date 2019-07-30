@@ -135,7 +135,6 @@ func (n *Notifier) getTemplate(status BuildStatus) string {
 	}
 
 	platformType := n.getPlatformType()
-	println(platformType)
 	if platformType == PlatformTypeUnknown {
 		return ""
 	}
