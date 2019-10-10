@@ -1,4 +1,4 @@
-module github.com/MZCloudnoa/cloud-build-notifier/v1
+module notifier
 
 go 1.11
 
