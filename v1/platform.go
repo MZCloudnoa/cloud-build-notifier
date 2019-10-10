@@ -39,7 +39,7 @@ type Platform struct {
 const templateSlack = `{
 	"attachments": [{
 		"fallback": "{{.Title}} : {{.Status}}",
-		{{if or (eq .Status "QUEUED") (eq .Status "WORKING") (eq .Status "SUCCESS") -}}
+		{{if (eq .Status "SUCCESS") -}}
 		"color": "good",
 		{{else if or (eq .Status "FAILURE") (eq .Status "TIMEOUT") (eq .Status "INTERNAL_ERROR") -}}
 		"color": "#ff0000",
@@ -47,13 +47,15 @@ const templateSlack = `{
 		"color": "#cccccc",
 		{{end -}}
 		"title": "{{.Title}} : {{.Status}}",
-		"title_link": "{{.Build.logUrl}}",
 		"text": "
-			{{- if ne .ProjectID "" -}}\nProject: {{.ProjectID}}{{- end -}}
-			{{- if ne .RepoName "" -}}\nRepository: {{.RepoName}}{{- end -}}
-			{{- if ne .TagName "" -}}\nTag: {{.TagName}}{{- end -}}
-			{{- if ne .BranchName "" -}}\nBranch: {{.BranchName}}{{- end -}}
-			{{- if ne .TriggerID "" -}}\nTrigger: <{{.TriggerURL}}|{{.TriggerID}}>{{- end -}}
+			{{- if ne .ProjectID "" -}}\nProject: <{{.ProjectURL}}|{{.ProjectID}}>{{- end -}}
+			{{- if ne .Git.Repository "" -}}\nRepository: <{{.Git.ProviderURL}}|{{.Git.Provider}}>/<{{.Git.OrgnizationURL}}|{{.Git.Orgnization}}>/<{{.Git.RepositoryURL}}|{{.Git.Repository}}>{{- end -}}
+			{{- if ne .Git.Branch "" -}}\nBranch: <{{.Git.BranchURL}}|{{.Git.Branch}}>{{- end -}}
+			{{- if ne .Git.Tag "" -}}\nTag: <{{.Git.TagURL}}|{{.Git.Tag}}>{{- end -}}
+			\n\n[ <{{.Build.logUrl}}|Log>
+			{{- if ne .TriggerURL ""}} | <{{.TriggerURL}}|Trigger>{{- end -}}
+			{{- if ne .Git.CommitURL ""}} | <{{.Git.CommitURL}}|Source>{{- end -}}
+			{{- if ne .Git.CommitInfoURL ""}} | <{{.Git.CommitInfoURL}}|Commit>{{- end -}} ]
 		",
 	}]
 }`

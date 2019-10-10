@@ -2,7 +2,6 @@ package notifier
 
 import (
 	"io/ioutil"
-	"os"
 	"strings"
 	"testing"
 )
@@ -37,10 +36,6 @@ func Test_Notifier_HandlePubSub(t *testing.T) {
 
 	dir := "../misc/example/"
 	ext := ".json"
-
-	// os.Setenv("_DRY_RUN", "t")
-	os.Setenv("_BUILD_TITLE", "Sample")
-	os.Setenv("_NOTIFY_URL", "https://hooks.slack.com/services/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")
 
 	t.Run("status", func(t *testing.T) {
 		files, err := ioutil.ReadDir(dir)

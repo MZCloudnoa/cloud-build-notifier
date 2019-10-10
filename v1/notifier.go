@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 // Options Options
@@ -42,9 +44,12 @@ func (n *Notifier) log(msg string) {
 }
 
 const triggerURLFormat = "https://console.cloud.google.com/cloud-build/triggers/%v?project=%v"
+const projectURLFormat = "https://console.cloud.google.com/home/dashboard?project=%v"
 
 // HandlePubSub HandlePubSub
 func (n *Notifier) HandlePubSub(data []byte) error {
+	godotenv.Load()
+
 	err := json.Unmarshal(data, &n.build)
 	if err != nil {
 		return err
@@ -73,16 +78,36 @@ func (n *Notifier) HandlePubSub(data []byte) error {
 		}
 	}
 
+	projectID := getProp(n.build, "projectId")
+	branchName := getProp(n.build, "source.repoSource.branchName")
+	tagName := getProp(n.build, "source.repoSource.tagName")
+	commitSha := getProp(n.build, "sourceProvenance.resolvedRepoSource.commitSha")
+
+	gitInfo := parseGitRepo(getProp(n.build, "source.repoSource.repoName"))
+
 	params := map[string]interface{}{
 		"Build":      n.build,
 		"Title":      n.getTitle(),
 		"Status":     status.(string),
-		"ProjectID":  getProp(n.build, "projectId"),
-		"RepoName":   getProp(n.build, "source.repoSource.repoName"),
-		"TagName":    getProp(n.build, "source.repoSource.tagName"),
-		"BranchName": getProp(n.build, "source.repoSource.branchName"),
+		"ProjectID":  projectID,
+		"ProjectURL": fmt.Sprintf(projectURLFormat, projectID),
 		"TriggerID":  getProp(n.build, "buildTriggerId"),
 		"TriggerURL": fmt.Sprintf(triggerURLFormat, getProp(n.build, "buildTriggerId"), getProp(n.build, "projectId")),
+		"Git": map[string]interface{}{
+			"Provider":       gitInfo.ProviderName(),
+			"ProviderURL":    gitInfo.ProviderURL(),
+			"Orgnization":    gitInfo.Orgnization(),
+			"OrgnizationURL": gitInfo.OrgnizationURL(),
+			"Repository":     gitInfo.Repository(),
+			"RepositoryURL":  gitInfo.RepositoryURL(),
+			"Branch":         branchName,
+			"BranchURL":      gitInfo.BranchURL(branchName),
+			"Tag":            tagName,
+			"TagURL":         gitInfo.TagURL(tagName),
+			"Commit":         commitSha,
+			"CommitURL":      gitInfo.CommitURL(commitSha),
+			"CommitInfoURL":  gitInfo.CommitInfoURL(commitSha),
+		},
 	}
 
 	tmpl := n.getTemplate(buildStatus)
