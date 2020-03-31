@@ -43,7 +43,7 @@ func (n *Notifier) log(msg string) {
 	}
 }
 
-const triggerURLFormat = "https://console.cloud.google.com/cloud-build/triggers/%v?project=%v"
+const triggerURLFormat = "https://console.cloud.google.com/cloud-build/triggers/edit/%v?project=%v"
 const projectURLFormat = "https://console.cloud.google.com/home/dashboard?project=%v"
 
 // HandlePubSub HandlePubSub
