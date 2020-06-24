@@ -11,9 +11,11 @@ import (
 // Options Options
 type Options struct {
 	Title           string                 // _BUILD_TITLE, default "<NO TITLE>"
+	RepoName        string                 // _REPO_NAME
 	NotifyURL       string                 // _NOTIFY_URL
 	Excludes        []BuildStatus          // _NOTIFY_EXCLUDES
 	Platform        PlatformType           // _NOTIFY_PLATFORM, default "SLACK"
+	Disabled        bool                   // _NOTIFY_DISABLED, default "false"
 	DryRun          bool                   // _DRY_RUN, default "false"
 	QuietMode       bool                   // _QUIET_MODE, default "false"
 	DefaultTemplate string                 // _DEFAULT_TEMPLATE
@@ -79,11 +81,28 @@ func (n *Notifier) HandlePubSub(data []byte) error {
 	}
 
 	projectID := getProp(n.build, "projectId")
-	branchName := getProp(n.build, "source.repoSource.branchName")
-	tagName := getProp(n.build, "source.repoSource.tagName")
-	commitSha := getProp(n.build, "sourceProvenance.resolvedRepoSource.commitSha")
 
-	gitInfo := parseGitRepo(getProp(n.build, "source.repoSource.repoName"))
+	branchName := getProp(n.build, "source.repoSource.branchName")
+	if branchName == "" {
+		branchName = n.getSubEnv("BRANCH_NAME")
+	}
+
+	tagName := getProp(n.build, "source.repoSource.tagName")
+	if tagName == "" {
+		tagName = n.getSubEnv("TAG_NAME")
+	}
+
+	commitSha := getProp(n.build, "sourceProvenance.resolvedRepoSource.commitSha")
+	if commitSha == "" {
+		commitSha = n.getSubEnv("COMMIT_SHA")
+	}
+
+	repoName := getProp(n.build, "source.repoSource.repoName")
+	if repoName == "" {
+		repoName = n.getRepoName()
+	}
+
+	gitInfo := parseGitRepo(repoName)
 
 	params := map[string]interface{}{
 		"Build":      n.build,
@@ -94,19 +113,19 @@ func (n *Notifier) HandlePubSub(data []byte) error {
 		"TriggerID":  getProp(n.build, "buildTriggerId"),
 		"TriggerURL": fmt.Sprintf(triggerURLFormat, getProp(n.build, "buildTriggerId"), getProp(n.build, "projectId")),
 		"Git": map[string]interface{}{
-			"Provider":       gitInfo.ProviderName(),
-			"ProviderURL":    gitInfo.ProviderURL(),
-			"Orgnization":    gitInfo.Orgnization(),
-			"OrgnizationURL": gitInfo.OrgnizationURL(),
-			"Repository":     gitInfo.Repository(),
-			"RepositoryURL":  gitInfo.RepositoryURL(),
-			"Branch":         branchName,
-			"BranchURL":      gitInfo.BranchURL(branchName),
-			"Tag":            tagName,
-			"TagURL":         gitInfo.TagURL(tagName),
-			"Commit":         commitSha,
-			"CommitURL":      gitInfo.CommitURL(commitSha),
-			"CommitInfoURL":  gitInfo.CommitInfoURL(commitSha),
+			"Provider":        gitInfo.ProviderName(),
+			"ProviderURL":     gitInfo.ProviderURL(),
+			"Organization":    gitInfo.Organization(),
+			"OrganizationURL": gitInfo.OrganizationURL(),
+			"Repository":      gitInfo.Repository(),
+			"RepositoryURL":   gitInfo.RepositoryURL(),
+			"Branch":          branchName,
+			"BranchURL":       gitInfo.BranchURL(branchName),
+			"Tag":             tagName,
+			"TagURL":          gitInfo.TagURL(tagName),
+			"Commit":          commitSha,
+			"CommitURL":       gitInfo.CommitURL(commitSha),
+			"CommitInfoURL":   gitInfo.CommitInfoURL(commitSha),
 		},
 	}
 

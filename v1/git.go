@@ -6,14 +6,14 @@ import (
 )
 
 type gitProvider struct {
-	name                 string
-	baseURL              string
-	orgnizationURLFormat string
-	repositoryURLFormat  string
-	branchURLFormat      string
-	tagURLFormat         string
-	commitURLFormat      string
-	commitInfoURLFormat  string
+	name                  string
+	baseURL               string
+	OrganizationURLFormat string
+	repositoryURLFormat   string
+	branchURLFormat       string
+	tagURLFormat          string
+	commitURLFormat       string
+	commitInfoURLFormat   string
 }
 
 func (g *gitProvider) Name() string {
@@ -24,57 +24,57 @@ func (g *gitProvider) URL() string {
 	return g.baseURL
 }
 
-func (g *gitProvider) OrgnizationURL(orgnization string) string {
-	return fmt.Sprintf(g.orgnizationURLFormat, g.baseURL, orgnization)
+func (g *gitProvider) OrganizationURL(Organization string) string {
+	return fmt.Sprintf(g.OrganizationURLFormat, g.baseURL, Organization)
 }
 
-func (g *gitProvider) RepositoryURL(orgnization, repository string) string {
-	return fmt.Sprintf(g.repositoryURLFormat, g.baseURL, orgnization, repository)
+func (g *gitProvider) RepositoryURL(Organization, repository string) string {
+	return fmt.Sprintf(g.repositoryURLFormat, g.baseURL, Organization, repository)
 }
 
-func (g *gitProvider) BranchURL(orgnization, repository, branch string) string {
-	return fmt.Sprintf(g.branchURLFormat, g.baseURL, orgnization, repository, branch)
+func (g *gitProvider) BranchURL(Organization, repository, branch string) string {
+	return fmt.Sprintf(g.branchURLFormat, g.baseURL, Organization, repository, branch)
 }
 
-func (g *gitProvider) TagURL(orgnization, repository, tag string) string {
-	return fmt.Sprintf(g.tagURLFormat, g.baseURL, orgnization, repository, tag)
+func (g *gitProvider) TagURL(Organization, repository, tag string) string {
+	return fmt.Sprintf(g.tagURLFormat, g.baseURL, Organization, repository, tag)
 }
 
-func (g *gitProvider) CommitURL(orgnization, repository, commit string) string {
-	return fmt.Sprintf(g.commitURLFormat, g.baseURL, orgnization, repository, commit)
+func (g *gitProvider) CommitURL(Organization, repository, commit string) string {
+	return fmt.Sprintf(g.commitURLFormat, g.baseURL, Organization, repository, commit)
 }
 
-func (g *gitProvider) CommitInfoURL(orgnization, repository, commit string) string {
-	return fmt.Sprintf(g.commitInfoURLFormat, g.baseURL, orgnization, repository, commit)
+func (g *gitProvider) CommitInfoURL(Organization, repository, commit string) string {
+	return fmt.Sprintf(g.commitInfoURLFormat, g.baseURL, Organization, repository, commit)
 }
 
 var gitProviders = map[string]*gitProvider{
-	"github": &gitProvider{
-		name:                 "GitHub",
-		baseURL:              "https://github.com",
-		orgnizationURLFormat: "%[1]v/%[2]v",
-		repositoryURLFormat:  "%[1]v/%[2]v/%[3]v",
-		branchURLFormat:      "%[1]v/%[2]v/%[3]v/tree/%[4]v",
-		tagURLFormat:         "%[1]v/%[2]v/%[3]v/tree/%[4]v",
-		commitURLFormat:      "%[1]v/%[2]v/%[3]v/tree/%[4]v",
-		commitInfoURLFormat:  "%[1]v/%[2]v/%[3]v/commit/%[4]v",
+	"github": {
+		name:                  "GitHub",
+		baseURL:               "https://github.com",
+		OrganizationURLFormat: "%[1]v/%[2]v",
+		repositoryURLFormat:   "%[1]v/%[2]v/%[3]v",
+		branchURLFormat:       "%[1]v/%[2]v/%[3]v/tree/%[4]v",
+		tagURLFormat:          "%[1]v/%[2]v/%[3]v/tree/%[4]v",
+		commitURLFormat:       "%[1]v/%[2]v/%[3]v/tree/%[4]v",
+		commitInfoURLFormat:   "%[1]v/%[2]v/%[3]v/commit/%[4]v",
 	},
-	"bitbucket": &gitProvider{
-		name:                 "Bitbucket",
-		baseURL:              "https://bitbucket.org",
-		orgnizationURLFormat: "%[1]v/%[2]v",
-		repositoryURLFormat:  "%[1]v/%[2]v/%[3]v",
-		branchURLFormat:      "%[1]v/%[2]v/%[3]v/src/%[4]v",
-		tagURLFormat:         "%[1]v/%[2]v/%[3]v/src/%[4]v",
-		commitURLFormat:      "%[1]v/%[2]v/%[3]v/src/%[4]v",
-		commitInfoURLFormat:  "%[1]v/%[2]v/%[3]v/commits/%[4]v",
+	"bitbucket": {
+		name:                  "Bitbucket",
+		baseURL:               "https://bitbucket.org",
+		OrganizationURLFormat: "%[1]v/%[2]v",
+		repositoryURLFormat:   "%[1]v/%[2]v/%[3]v",
+		branchURLFormat:       "%[1]v/%[2]v/%[3]v/src/%[4]v",
+		tagURLFormat:          "%[1]v/%[2]v/%[3]v/src/%[4]v",
+		commitURLFormat:       "%[1]v/%[2]v/%[3]v/src/%[4]v",
+		commitInfoURLFormat:   "%[1]v/%[2]v/%[3]v/commits/%[4]v",
 	},
 }
 
 var defaultGitProvider = &gitProvider{
-	name:                 "Unknown",
-	baseURL:              "",
-	orgnizationURLFormat: "",
+	name:                  "Unknown",
+	baseURL:               "",
+	OrganizationURLFormat: "",
 }
 
 type gitInfo struct {
@@ -91,12 +91,12 @@ func (g *gitInfo) ProviderURL() string {
 	return g.provider.URL()
 }
 
-func (g *gitInfo) Orgnization() string {
+func (g *gitInfo) Organization() string {
 	return g.organization
 }
 
-func (g *gitInfo) OrgnizationURL() string {
-	return g.provider.OrgnizationURL(g.organization)
+func (g *gitInfo) OrganizationURL() string {
+	return g.provider.OrganizationURL(g.organization)
 }
 
 func (g *gitInfo) Repository() string {

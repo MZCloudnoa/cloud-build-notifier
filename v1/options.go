@@ -28,6 +28,19 @@ func (n *Notifier) getTitle() string {
 	return "<NO TITLE>"
 }
 
+func (n *Notifier) getRepoName() string {
+	repoName := n.getSubEnv("_REPO_NAME")
+	if repoName != "" {
+		return repoName
+	}
+
+	if n.options != nil && n.options.RepoName != "" {
+		return n.options.RepoName
+	}
+
+	return ""
+}
+
 func (n *Notifier) getNotifyURL() string {
 	url := n.getSubEnv("_NOTIFY_URL")
 	if url != "" {
@@ -77,6 +90,23 @@ func (n *Notifier) getPlatformType() PlatformType {
 	}
 
 	return PlatformTypeSlack
+}
+
+func (n *Notifier) getDisabled() bool {
+	disabled := n.getSubEnv("_NOTIFY_DISABLED")
+	if disabled != "" {
+		val, err := strconv.ParseBool(disabled)
+		if err != nil {
+			return false
+		}
+		return val
+	}
+
+	if n.options != nil && n.options.Disabled {
+		return true
+	}
+
+	return false
 }
 
 func (n *Notifier) getDryRun() bool {

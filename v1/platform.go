@@ -49,7 +49,7 @@ const templateSlack = `{
 		"title": "{{.Title}} : {{.Status}}",
 		"text": "
 			{{- if ne .ProjectID "" -}}\nProject: <{{.ProjectURL}}|{{.ProjectID}}>{{- end -}}
-			{{- if ne .Git.Repository "" -}}\nRepository: <{{.Git.ProviderURL}}|{{.Git.Provider}}>/<{{.Git.OrgnizationURL}}|{{.Git.Orgnization}}>/<{{.Git.RepositoryURL}}|{{.Git.Repository}}>{{- end -}}
+			{{- if ne .Git.Repository "" -}}\nRepository: <{{.Git.ProviderURL}}|{{.Git.Provider}}>/<{{.Git.OrganizationURL}}|{{.Git.Organization}}>/<{{.Git.RepositoryURL}}|{{.Git.Repository}}>{{- end -}}
 			{{- if ne .Git.Branch "" -}}\nBranch: <{{.Git.BranchURL}}|{{.Git.Branch}}>{{- end -}}
 			{{- if ne .Git.Tag "" -}}\nTag: <{{.Git.TagURL}}|{{.Git.Tag}}>{{- end -}}
 			\n\n[ <{{.Build.logUrl}}|Log>
@@ -63,7 +63,7 @@ const templateSlack = `{
 const templateHangoutsChat = `{ "text": "{{.Title}} : {{.Status}}" }`
 
 var platforms = map[PlatformType]Platform{
-	PlatformTypeSlack: Platform{
+	PlatformTypeSlack: {
 		DefaultTemplate: templateSlack,
 		HTTPMethod:      http.MethodPost,
 		HTTPHeaders: map[string]string{
@@ -71,7 +71,7 @@ var platforms = map[PlatformType]Platform{
 		},
 	},
 
-	PlatformTypeHangoutsChat: Platform{
+	PlatformTypeHangoutsChat: {
 		DefaultTemplate: templateHangoutsChat,
 		HTTPMethod:      http.MethodPost,
 		HTTPHeaders: map[string]string{
