@@ -102,8 +102,8 @@ func (n *Notifier) getDisabled() bool {
 		return val
 	}
 
-	if n.options != nil && n.options.Disabled {
-		return true
+	if n.options != nil {
+		return n.options.Disabled
 	}
 
 	return false
@@ -119,28 +119,45 @@ func (n *Notifier) getDryRun() bool {
 		return val
 	}
 
-	if n.options != nil && n.options.DryRun {
-		return true
+	if n.options != nil {
+		return n.options.DryRun
 	}
 
 	return false
 }
 
 func (n *Notifier) getQuietMode() bool {
-	dryRun := n.getSubEnv("_QUIET_MODE")
-	if dryRun != "" {
-		val, err := strconv.ParseBool(dryRun)
+	str := n.getSubEnv("_QUIET_MODE")
+	if str != "" {
+		val, err := strconv.ParseBool(str)
 		if err != nil {
 			return false
 		}
 		return val
 	}
 
-	if n.options != nil && n.options.DryRun {
-		return true
+	if n.options != nil {
+		return n.options.QuietMode
 	}
 
 	return false
+}
+
+func (n *Notifier) getTriggeredOnly() bool {
+	str := n.getSubEnv("_TRIGGERED_ONLY")
+	if str != "" {
+		val, err := strconv.ParseBool(str)
+		if err != nil {
+			return true
+		}
+		return val
+	}
+
+	if n.options != nil {
+		return n.options.TriggeredOnly
+	}
+
+	return true
 }
 
 func (n *Notifier) getTemplate(status BuildStatus) string {

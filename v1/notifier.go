@@ -18,6 +18,7 @@ type Options struct {
 	Disabled        bool                   // _NOTIFY_DISABLED, default "false"
 	DryRun          bool                   // _DRY_RUN, default "false"
 	QuietMode       bool                   // _QUIET_MODE, default "false"
+	TriggeredOnly   bool                   // _TRIGGERED_ONLY, default "true"
 	DefaultTemplate string                 // _DEFAULT_TEMPLATE
 	Templates       map[BuildStatus]string // _TEMPLATE_{status}
 }
@@ -58,6 +59,11 @@ func (n *Notifier) HandlePubSub(data []byte) error {
 	}
 
 	n.quietMode = n.getQuietMode()
+
+	triggerID := getProp(n.build, "buildTriggerId")
+	if n.getTriggeredOnly() && triggerID == "" {
+		return nil
+	}
 
 	status, statusExists := n.build["status"]
 	if !statusExists {
@@ -110,8 +116,8 @@ func (n *Notifier) HandlePubSub(data []byte) error {
 		"Status":     status.(string),
 		"ProjectID":  projectID,
 		"ProjectURL": fmt.Sprintf(projectURLFormat, projectID),
-		"TriggerID":  getProp(n.build, "buildTriggerId"),
-		"TriggerURL": fmt.Sprintf(triggerURLFormat, getProp(n.build, "buildTriggerId"), getProp(n.build, "projectId")),
+		"TriggerID":  triggerID,
+		"TriggerURL": fmt.Sprintf(triggerURLFormat, triggerID, projectID),
 		"Git": map[string]interface{}{
 			"Provider":        gitInfo.ProviderName(),
 			"ProviderURL":     gitInfo.ProviderURL(),
